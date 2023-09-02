@@ -4,13 +4,13 @@ SELECT
 	t1.food_code,
 	t1.food_name,
 	t1.value,
-	t2.value AS "value+1 year",
-	AVG(ROUND(((t2.value/t1.value) - 1)*100, 2)) AS "vysledek_v_procentech"
+	t2.value AS value_nextyear,
+	AVG(ROUND(((t2.value/t1.value) - 1)*100, 2)) AS result_in_percentage
 FROM t_jan_kaminsky_project_SQL_primary_final t1
 JOIN t_jan_kaminsky_project_SQL_primary_final t2
 	ON t1.payroll_year = t2.payroll_year-1
 	AND t1.food_code = t2.food_code
 GROUP BY food_code
-ORDER BY vysledek_v_procentech;
+ORDER BY result_in_percentage;
 
 
