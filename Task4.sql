@@ -2,13 +2,13 @@
 
 WITH vysledek AS(
 	SELECT 
-		t1.payroll_year AS "payroll_year",
-		t1.salary AS "salary",
-		t2.salary AS "salary+1_year",
-		ROUND(((t2.salary - t1.salary)/t1.salary)*100, 2) AS "rozdil_mezd",
-		AVG(t1.value) AS "cena_potravin",
-		AVG(t2.value) AS "cena_potravin+1_rok",
-		AVG(ROUND(((t2.value/t1.value) - 1)*100, 2)) AS "rozdil_potravin"
+		t1.payroll_year AS payroll_year,
+		t1.salary AS salary,
+		t2.salary AS salary_nextyear,
+		ROUND(((t2.salary - t1.salary)/t1.salary)*100, 2) AS rozdil_mezd,
+		AVG(t1.value) AS cena_potravin,
+		AVG(t2.value) AS cena_potravin_dalsi_rok,
+		AVG(ROUND(((t2.value/t1.value) - 1)*100, 2)) AS rozdil_potravin
 	FROM t_jan_kaminsky_project_SQL_primary_final t1
 	JOIN t_jan_kaminsky_project_SQL_primary_final t2
 		ON t1.payroll_year = t2.payroll_year-1
@@ -17,10 +17,10 @@ WITH vysledek AS(
 	GROUP BY t1.payroll_year)
 SELECT
 	payroll_year,
-	(payroll_year + 1) AS "year_+1",
+	(payroll_year + 1) AS nextyear,
 	salary,
 	cena_potravin,
-	(rozdil_potravin - rozdil_mezd) AS "mzdyXpotraviny",
+	(rozdil_potravin - rozdil_mezd) AS mzdyXpotraviny,
 	rozdil_mezd,
 	rozdil_potravin	
 FROM vysledek

@@ -13,8 +13,8 @@ SELECT
 	t1.payroll_year,
 	t1.ib_code,
 	t1.ib_name,
-	t1.salary AS "salary",
-	t2.salary AS "salary+1_year",
+	t1.salary AS salary,
+	t2.salary AS salary_nextyear,
 	CASE
 		WHEN t1.salary - t2.salary > 0 THEN "salary is lower than previous year"
 		ELSE 0
@@ -33,16 +33,16 @@ GROUP BY t1.ib_code, t1.payroll_year
 WITH vysledek AS(
 	SELECT  
 		t1.payroll_year AS "year",
-		t2.payroll_year AS "year+1",
-		t1.ib_name AS "industry_branch",
-		t1.ib_code AS "industry_branch_code",
-		t1.salary AS "salary",
-		t2.salary AS "salary+1_year",
+		t2.payroll_year AS nextyear,
+		t1.ib_name AS industry_branch,
+		t1.ib_code AS industry_branch_code,
+		t1.salary AS salary,
+		t2.salary AS salary_nextyear,
 		CASE
 			WHEN t1.salary - t2.salary > 0 THEN "salary is lower than previous year"
 			ELSE 0
 		END AS growing, 
-		(t1.salary - t2.salary) AS "difference"
+		(t1.salary - t2.salary) AS difference
 	FROM t_jan_kaminsky_project_SQL_primary_final t1
 	JOIN t_jan_kaminsky_project_SQL_primary_final t2
 		ON t1.payroll_year = t2.payroll_year-1
