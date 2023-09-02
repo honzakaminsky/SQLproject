@@ -1,8 +1,0 @@
-# Ignorovat soubory a složky vygenerované macOS
-.DS_Store
-
-# Ignorovat dočasné soubory
-*.tmp
-
-
-
